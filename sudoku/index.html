@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sudoku Clone</title>
+  <link rel="icon" href="TemplateData/favicon.ico">
+  <style>
+    :root { font-family: Arial, "Noto Sans KR", sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; background: #d6d4ce; color: #161616; }
+    main { width: min(824px, calc(100% - 20px)); margin: 0 auto; padding: 16px 0 28px; }
+    header { display: flex; align-items: end; justify-content: space-between; gap: 16px; padding: 0 0 10px; border-bottom: 2px solid #222; margin-bottom: 12px; }
+    h1 { margin: 4px 0 0; font-size: 28px; }
+    a { color: #0645ad; text-decoration: underline; }
+    button { border: 2px outset #eee; border-radius: 0; background: #ecebe7; color: #111; padding: 6px 12px; cursor: pointer; font: inherit; }
+    button:active { border-style: inset; }
+    #unity-container { position: relative; width: min(800px, 100%); margin: 0 auto; overflow: hidden; border: 2px solid #222; border-radius: 0; background: #202124; box-shadow: none; }
+    #unity-canvas { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; background: #202124; }
+    #loading { position: absolute; inset: 0; display: grid; place-content: center; gap: 10px; background: #deddd8; color: #111; text-align: center; }
+    #progress-track { width: min(320px, 62vw); height: 12px; overflow: hidden; border: 1px solid #333; border-radius: 0; background: #f5f5f2; }
+    #progress { width: 0; height: 100%; background: #777; }
+    #warning { position: absolute; top: 12px; left: 12px; right: 12px; z-index: 3; }
+    #warning div { margin-bottom: 4px; padding: 8px 10px; border: 1px solid #700; border-radius: 0; background: #f4cccc; color: #700; }
+    .help { margin: 9px 0 0; color: #333; font-size: 14px; }
+    @media (max-width: 640px) { header { align-items: flex-start; flex-direction: column; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <a href="../">← 게임 목록</a>
+        <h1>Sudoku Clone</h1>
+      </div>
+      <button id="fullscreen" type="button">전체 화면</button>
+    </header>
+    <div id="unity-container">
+      <canvas id="unity-canvas" width="800" height="600" tabindex="-1"></canvas>
+      <div id="loading">
+        <span>게임 불러오는 중</span>
+        <div id="progress-track"><div id="progress"></div></div>
+      </div>
+      <div id="warning"></div>
+    </div>
+    <p class="help">레벨 선택 · 빈칸 선택 · 숫자키 1~9 입력 · 오답 3회 시도 시 종료</p>
+  </main>
+  <script>
+    const canvas = document.querySelector('#unity-canvas');
+    const loading = document.querySelector('#loading');
+    const progress = document.querySelector('#progress');
+    const warning = document.querySelector('#warning');
+
+    function showBanner(message, type) {
+      const item = document.createElement('div');
+      item.textContent = message;
+      warning.appendChild(item);
+      if (type !== 'error') setTimeout(() => item.remove(), 5000);
+    }
+
+    const config = {
+      dataUrl: 'Build/sudoku.data.unityweb?v=sudoku-1',
+      frameworkUrl: 'Build/sudoku.framework.js.unityweb?v=sudoku-1',
+      codeUrl: 'Build/sudoku.wasm.unityweb?v=sudoku-1',
+      streamingAssetsUrl: 'StreamingAssets',
+      companyName: 'jun-uni',
+      productName: 'Sudoku Clone',
+      productVersion: '1.0',
+      showBanner
+    };
+
+    const loader = document.createElement('script');
+    loader.src = 'Build/sudoku.loader.js?v=sudoku-1';
+    loader.onload = () => {
+      createUnityInstance(canvas, config, value => {
+        progress.style.width = `${value * 100}%`;
+      }).then(instance => {
+        loading.style.display = 'none';
+        document.querySelector('#fullscreen').onclick = () => instance.SetFullscreen(1);
+      }).catch(message => showBanner(message, 'error'));
+    };
+    document.body.appendChild(loader);
+  </script>
+</body>
+</html>

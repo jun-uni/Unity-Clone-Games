@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Unity Clone Game Collection</title>
+  <style>
+    :root { font-family: Arial, "Noto Sans KR", sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #e4e3df; color: #161616; }
+    header { padding: 22px 20px 18px; border-bottom: 3px solid #161616; background: #f5f4ef; }
+    header div { width: min(900px, 100%); margin: 0 auto; }
+    main { width: min(900px, calc(100% - 40px)); margin: 0 auto; padding: 26px 0 60px; }
+    h1 { margin: 0 0 7px; font-size: 32px; }
+    header p { margin: 0; color: #444; }
+    h2 { margin: 0; padding-bottom: 8px; border-bottom: 1px solid #555; font-size: 20px; }
+    .game { display: grid; grid-template-columns: 150px 1fr 90px; gap: 18px; align-items: start; padding: 18px 0; border-bottom: 1px solid #999; }
+    .game h3, .game p { margin: 0; }
+    .game h3 { font-size: 18px; }
+    .game p { color: #333; line-height: 1.5; }
+    a { color: #0645ad; text-decoration: underline; }
+    @media (max-width: 620px) { .game { grid-template-columns: 1fr; gap: 8px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Unity Clone Games</h1>
+      <p>개인 연습으로 만든 Unity 클론 게임 모음</p>
+    </div>
+  </header>
+  <main>
+    <section aria-label="게임 목록">
+      <h2>게임 목록</h2>
+      <article class="game">
+        <h3>2048 Clone</h3>
+        <p>4×4 보드의 이동, 병합, 점수 계산과 게임 오버 판정 구현</p>
+        <a href="./2048/">실행</a>
+      </article>
+      <article class="game">
+        <h3>Suika Game Clone</h3>
+        <p>2D 물리 낙하, 동일 과일 병합, 진화 단계와 점수 처리 구현</p>
+        <a href="./suika/">실행</a>
+      </article>
+      <article class="game">
+        <h3>Wordle Clone</h3>
+        <p>영어·한글 입력, 중복 문자 판정, 사전 검사와 6회 시도 구현</p>
+        <a href="./wordle/">실행</a>
+      </article>
+      <article class="game">
+        <h3>Sudoku Clone</h3>
+        <p>고유 해답 퍼즐 생성, 빈칸 수 기반 50개 레벨, 숫자 입력과 오답 처리 구현</p>
+        <a href="./sudoku/">실행</a>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
